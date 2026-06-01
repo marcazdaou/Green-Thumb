@@ -1,68 +1,80 @@
 {% load static %}
-<!--Shrinal's Requirement to add cart and checkout section-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> GreenThumb </title>
-        <title>Home</title>
-        <link rel="stylesheet" href="{% static 'store/css/nav.css' %}">
-        <link rel="stylesheet" href="{% static 'store/css/about.css' %}">
-        <link rel="stylesheet" href="{% static 'store/css/cart.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Thumb | Cart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'store/css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/cart.css' %}">
 </head>
 
 <body data-page="cart">
-<!-- CART Contents Here-->
-{% include 'store/partials/navbar.html' %}
-<main class="shop-wrap themed">
-  <h1 class="shop-title">Your Cart</h1>
 
-  <section class="products-grid" id="cart-items">
-  </section>
+    {% include 'store/partials/navbar.html' %}
 
-<div class="payment-card">
+    <main class="cart-wrap">
+        <h1 class="page-title">Your Cart</h1>
 
-  <h2>Total: $<span id="cart-total">0.00</span></h2>
+        <div class="cart-layout">
+            <section class="cart-items" id="cart-items"></section>
 
-  <label>Select Payment Method</label>
+            <aside class="order-summary">
+                <h2>Order Summary</h2>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>$<span id="cart-total">0.00</span></span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span class="free-tag">Free</span>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-row summary-total">
+                    <span>Total</span>
+                    <span>$<span id="cart-total-final">0.00</span></span>
+                </div>
 
-  <!-- CUSTOM DROPDOWN -->
-  <div class="custom-select">
-<select id="payment-method">
-  <option value="card">💳 Credit / Debit Card</option>
-  <option value="paypal">🅿️ PayPal</option>
-  <option value="applepay">🍎 Apple Pay</option>
-  <option value="cod">🚚 Cash on Delivery</option>
-</select>
-  </div>
+                <div class="payment-section">
+                    <label for="payment-method">Payment Method</label>
+                    <select id="payment-method">
+                        <option value="card">Credit / Debit Card</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="applepay">Apple Pay</option>
+                        <option value="cod">Cash on Delivery</option>
+                    </select>
+                </div>
 
-  <!-- CARD FORM (SIMULATION) -->
-  <div id="card-form" class="payment-form">
-    <input type="text" placeholder="Card Number">
-    <input type="text" placeholder="Card Holder Name">
-    <div class="row">
-      <input type="text" placeholder="MM/YY">
-      <input type="text" placeholder="CVV">
+                <div id="card-form" class="card-form">
+                    <input type="text" placeholder="Card Number" maxlength="19">
+                    <input type="text" placeholder="Cardholder Name">
+                    <div class="card-row">
+                        <input type="text" placeholder="MM / YY" maxlength="7">
+                        <input type="text" placeholder="CVV" maxlength="4">
+                    </div>
+                </div>
+
+                <button class="pay-btn" onclick="simulatePayment()">Place Order</button>
+            </aside>
+        </div>
+
+        <p class="cart-empty-msg" id="cart-empty-msg" hidden>
+            Your cart is empty. <a href="{% url 'shop' %}">Continue shopping</a>
+        </p>
+    </main>
+
+    <div id="success-popup" class="success-popup">
+        <div class="success-box">
+            <div class="success-icon">&#10003;</div>
+            <h2>Order Placed</h2>
+            <p>Thank you for your purchase.</p>
+        </div>
     </div>
-  </div>
 
-
-  <button class="pay-btn" onclick="simulatePayment()">Pay Now</button>
-
-</div>
-<div id="success-popup" class="success-popup">
-  <div class="success-box">
-    <div class="checkmark">✔</div>
-    <h2>Payment Successful!</h2>
-    <p>Your order has been placed successfully.</p>
-  </div>
-</div>
-</main>
-
-  <script src="{% static 'store/js/common.js' %}"></script>
-  <script src="{% static 'store/js/cart.js' %}"></script>
-
+    <script src="{% static 'store/js/common.js' %}"></script>
+    <script src="{% static 'store/js/cart.js' %}"></script>
 </body>
-
 </html>

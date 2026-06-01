@@ -4,95 +4,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Thumb | Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'store/css/nav.css' %}">
-    <link rel="stylesheet" href="{% static 'store/css/search.css' %}">
-    <link rel="stylesheet" href="{% static 'store/css/about.css' %}">
     <link rel="stylesheet" href="{% static 'store/css/shop.css' %}">
 </head>
+
 <body data-page="shop" data-static-root="{% get_static_prefix %}">
-  {% include 'store/partials/navbar.html' with show_search=True %}
 
-  <main class="shop-wrap themed">
-    <h1 class="shop-title">Shop Essentials</h1>
+    {% include 'store/partials/navbar.html' with show_search=True %}
 
-    <section class="products-grid" id="products-grid">
-<article class="product-card">
-  <img src="{% static 'images/products/waterbottle.png' %}" alt="Default">
+    <main class="shop-wrap">
+        <h1 class="shop-title">Shop</h1>
 
-  <div class="product-info">
-    <h2 class="product-name"></h2>
-    <p class="product-desc"></p>
-    <div class="product-price"></div>
+        <section class="products-grid" id="products-grid">
+            <article class="product-card">
+                <img src="{% static 'images/products/waterbottle.png' %}" alt="">
+                <div class="product-info">
+                    <h2 class="product-name"></h2>
+                    <p class="product-desc"></p>
+                    <div class="product-price"></div>
+                    <div class="cart-controls">
+                        <div class="qty-group">
+                            <button onclick="changeQty(this,-1)">-</button>
+                            <span class="qty">1</span>
+                            <button onclick="changeQty(this,1)">+</button>
+                        </div>
+                        <button class="add-btn">Add to Cart</button>
+                    </div>
+                </div>
+            </article>
+        </section>
 
-    <div class="cart-controls">
-      <button onclick="changeQty(this,-1)">-</button>
-      <span class="qty">1</span>
-      <button onclick="changeQty(this,1)">+</button>
-      <button class="add-btn">Add to Cart</button>
-    </div>
-  </div>
-</article>
-      <!--
-      <article class="product-card">
-        <img src="{% static 'images/products/waterbottle.png' %}" alt="Reusable Water Bottle">
-        <div class="product-info">
-          <h2 class="product-name">Reusable Water Bottle</h2>
-          <p class="product-desc">Lightweight bottle to keep you hydrated while gardening or on the go.</p>
-          <div class="product-price">$18.00</div>
-          <button onclick="addToCart('Reusable Water Bottle',18)">Add to Cart</button>
-        </div>
-      </article>
+        <p class="search-empty" id="search-empty" hidden>No products match your search.</p>
+    </main>
 
-      
-      <article class="product-card">
-        <img src="{% static 'images/products/cottonbag.png' %}" alt="Cotton Tote Bag">
-        <div class="product-info">
-          <h2 class="product-name">Cotton Tote Bag</h2>
-          <p class="product-desc">Durable everyday tote for groceries, tools, and market finds.</p>
-          <div class="product-price">$14.00</div>
-          <button onclick="addToCart('Cotton Tote Bag',14)">Add to Cart</button>
-        </div>
-      </article>
-
-      <article class="product-card">
-        <img src="{% static 'images/products/steelstraw.png' %}" alt="Steel Straw Set">
-        <div class="product-info">
-          <h2 class="product-name">Steel Straw Set</h2>
-          <p class="product-desc">Reusable stainless steel straws with a cleaner, perfect for daily use.</p>
-          <div class="product-price">$9.00</div>
-          <button onclick="addToCart('Steel Straw Set',9)">Add to Cart</button>
-        </div>
-      </article>
-
-      <article class="product-card">
-        <img src="{% static 'images/products/succulet.png' %}" alt="Succulents">
-        <div class="product-info">
-          <h2 class="product-name">Succulents</h2>
-          <p class="product-desc">Low-maintenance mini succulents to brighten desks and windowsills.</p>
-          <div class="product-price">$12.00</div>
-          <button onclick="addToCart('Succulents',12)">Add to Cart</button>
-        </div>
-      </article>
-
-      <article class="product-card">
-        <img src="{% static 'images/products/flowerseeds.png' %}" alt="Flower Seeds">
-        <div class="product-info">
-          <h2 class="product-name">Flower Seeds</h2>
-          <p class="product-desc">Assorted seasonal flower seeds for colorful blooms all season long.</p>
-          <div class="product-price">$6.00</div>
-          <button onclick="addToCart('Flower Seeds',6)">Add to Cart</button>
-        </div>
-      </article>
-    -->
-    </section>
-
-    <p class="search-empty" id="search-empty" hidden>No products match your search.</p>
-  </main>
-
-  <script>
-  var django_shop_items = JSON.parse('{{ shop_data|default:"[]"|escapejs }}');
-  </script>
-  <script src="{% static 'store/js/common.js' %}"></script>
-  <script src="{% static 'store/js/shop.js' %}"></script>
+    <script>
+        var django_shop_items = JSON.parse('{{ shop_data|default:"[]"|escapejs }}');
+    </script>
+    <script src="{% static 'store/js/common.js' %}"></script>
+    <script src="{% static 'store/js/shop.js' %}"></script>
 </body>
 </html>

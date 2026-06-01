@@ -1,71 +1,165 @@
-Ensure you have [python](https://www.python.org) installed.
+# Green Thumb
 
-## ⬇️ How to clone server
-Open terminal and navigate to location of installation
+A full-stack e-commerce web application for eco-friendly and reusable products. Built with Django, vanilla JavaScript, and pandas. Includes user authentication, a product catalog loaded from a database, customer reviews, a shopping cart, and a data analytics dashboard.
 
-Clone some version from the repository, for example the main branch would be:
+Live demo: https://green-thumb-marc.onrender.com
+
+---
+
+## Features
+
+- Product catalog sourced from a PostgreSQL/SQLite database
+- Shopping cart with localStorage persistence, scoped per user account
+- Customer reviews with star ratings — stored in the database, deletable by the author
+- Analytics dashboard powered by pandas: average ratings, review activity over time, revenue by product, monthly sales
+- Order tracking — each checkout records items to the database for analysis
+- User authentication — register, log in, log out, with session-scoped cart
+- Admin panel for managing products, reviews, orders, and user accounts
+
+---
+
+## Tech Stack
+
+| Layer      | Technology                          |
+|------------|-------------------------------------|
+| Backend    | Python 3, Django 5                  |
+| Database   | SQLite (dev) / PostgreSQL (prod)    |
+| Data       | pandas                              |
+| Frontend   | HTML, CSS, JavaScript               |
+| Charts     | Chart.js                            |
+| Deployment | Render, WhiteNoise (static files)   |
+
+---
+
+## Prerequisites
+
+- Python 3.10 or higher
+- pip
+
+---
+
+## Local Setup
+
+### 1. Clone the repository
+
 ```bash
-git clone https://github.com/A3GT/Green-Thumb.git
-
+git clone https://github.com/marcazdaou/Green-Thumb.git
 ```
-Open a terminal or change directory to the [backend](./backend)
+
+### 2. Create and activate a virtual environment
+
 ```bash
 cd backend
 
-```
-Then activate your virtual enviroment by running:
-```bash
 python -m venv venv
+
+# Windows
+venv\Scripts\activate
+
+# macOS / Linux
 source venv/bin/activate
-
 ```
-If that doesn't work, navigate to ./backend/venv/Scripts and run whichever script activates the enviroment on your OS.
 
-Finally, install your requirements file with the command
+### 3. Install dependencies
+
 ```bash
 pip install -r requirements.txt
-
 ```
-### 🔑 Generate a secret key
-This isn't strictly necessary but will prevent tampering
 
-Staying within [backend](./backend) run this python script in terminal
+### 4. Configure environment variables
+
+Generate a secret key:
+
 ```bash
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
+
+Create a file named `.env` inside the `backend` directory with the following content, replacing the placeholder with the key you just generated:
 
 ```
-Save the generated key.
-
-Create a .env file
-
-Within the file put:
+SECRET_KEY=your_generated_key_here
 ```
-SECRET_KEY=generated_key_here
 
-```
-Replace generated_key_here with the key you saved earlier.
-## 🚀 Running server
-To run the server, open your terminal in the [backend](./backend)
+### 5. Apply database migrations
 
-You may need to migrate any changes made if you are running the server for the first time or after updating it
 ```bash
 python manage.py migrate
 ```
-Once migrated, run the server
-```bash
-python manage.py runserver
-```
-Now you should be able to see the webpages by going to [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-## ⭐ Creating a superuser
-There is a supported admin view, which allows you to add, delete, and change user accounts, and other important data.
 
-To access the admin view at [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin) you need a superuser.
-First, open your terminal in the [backend](./backend)
+### 6. Seed the product catalog
+
+```bash
+python manage.py seed_products
+```
+
+### 7. Create an admin account
+
 ```bash
 python manage.py createsuperuser
 ```
-Then enter a username, password, and email for your superuser account. Making sure to record your username and password.
 
-Then you should be able to go to [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin) to login with your superuser account.
+Enter a username, email, and password when prompted. This account is used to access the admin panel.
 
-To add or remove an item, just go to the group and click add or change.
+### 8. Run the development server
+
+```bash
+python manage.py runserver
+```
+
+The application will be available at http://127.0.0.1:8000/
+
+---
+
+## Admin Panel
+
+Available at http://127.0.0.1:8000/admin
+
+Log in with the superuser account created above. From here you can add, edit, or delete products, reviews, orders, and user accounts.
+
+---
+
+## Deploying to Render
+
+1. Create a new Web Service on Render and connect this repository.
+2. Set the following configuration:
+
+| Setting           | Value                                                                                                   |
+|-------------------|---------------------------------------------------------------------------------------------------------|
+| Root Directory    | `backend`                                                                                               |
+| Build Command     | `pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate && python manage.py seed_products` |
+| Start Command     | `gunicorn greenthumb.wsgi:application`                                                                  |
+| Environment       | Python 3                                                                                                |
+
+3. Add the following environment variable:
+
+| Key         | Value                          |
+|-------------|--------------------------------|
+| `SECRET_KEY` | A securely generated secret key (see step 4 above) |
+
+---
+
+## Project Structure
+
+```
+Green-Thumb/
+    assets/                      Static images served by Django
+    backend/
+        greenthumb/              Django project settings, URL root, WSGI
+        store/                   Main application
+            management/
+                commands/
+                    seed_products.py     Populates the product catalog
+            migrations/          Database schema history
+            static/store/
+                css/             Per-page stylesheets
+                js/              Per-page JavaScript modules
+            templates/store/     HTML templates
+                partials/        Reusable navbar component
+            admin.py             Admin panel configuration
+            forms.py             User registration form
+            models.py            Database models (ShopProduct, Review, OrderItem)
+            urls.py              URL routing
+            views.py             Page views and API endpoints
+        requirements.txt         Python dependencies
+        manage.py                Django management CLI
+```

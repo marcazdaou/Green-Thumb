@@ -1,0 +1,260 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Thumb - Analytics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'store/css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/analytics.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body data-page="analytics">
+
+    {% include 'store/partials/navbar.html' %}
+
+    <main class="analytics-wrap">
+
+        <div class="page-header">
+            <h1>Analytics</h1>
+            <p class="page-subtitle">Product performance, customer insights, and sales data — powered by Python &amp; pandas</p>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <span class="metric-label">Total Reviews</span>
+                <span class="metric-value">{{ total_reviews }}</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">Average Rating</span>
+                <span class="metric-value">{{ avg_rating }}<span class="metric-unit">&nbsp;/ 5</span></span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">Total Revenue</span>
+                <span class="metric-value"><span class="metric-unit">$</span>{{ total_revenue }}</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">Units Sold</span>
+                <span class="metric-value">{{ total_orders }}</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">Products Listed</span>
+                <span class="metric-value">{{ total_products }}</span>
+            </div>
+            <div class="metric-card">
+                <span class="metric-label">Average Price</span>
+                <span class="metric-value"><span class="metric-unit">$</span>{{ avg_price }}</span>
+            </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="section-label">Customer Reviews</div>
+
+        <div class="charts-row">
+            <div class="chart-card">
+                <h2>Average Rating by Product</h2>
+                <p class="chart-sub">Mean star rating per product across all reviews</p>
+                <div class="chart-container">
+                    <canvas id="productRatingsChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h2>Rating Distribution</h2>
+                <p class="chart-sub">Breakdown of 1 to 5 star ratings</p>
+                <div class="chart-container chart-container--sm">
+                    <canvas id="ratingDistChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        {% if total_reviews > 0 %}
+        <div class="chart-card chart-card--full">
+            <h2>Review Activity Over Time</h2>
+            <p class="chart-sub">Number of reviews submitted per month (verified purchases)</p>
+            <div class="chart-container">
+                <canvas id="monthlyChart"></canvas>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Sales Section -->
+        <div class="section-label">Sales &amp; Revenue</div>
+
+        {% if total_orders > 0 %}
+        <div class="charts-row">
+            <div class="chart-card">
+                <h2>Revenue by Product</h2>
+                <p class="chart-sub">Total revenue generated per product</p>
+                <div class="chart-container">
+                    <canvas id="revenueByProductChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h2>Revenue Over Time</h2>
+                <p class="chart-sub">Monthly revenue from completed orders</p>
+                <div class="chart-container">
+                    <canvas id="revenueOverTimeChart"></canvas>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            No orders have been placed yet. Revenue charts will appear here once customers complete a purchase.
+        </div>
+        {% endif %}
+
+        <!-- Product Catalog Table -->
+        {% if total_products > 0 %}
+        <div class="section-label">Product Catalog</div>
+        <div class="chart-card chart-card--full">
+            <h2>All Products</h2>
+            <p class="chart-sub">Full catalog sorted by price — sourced from the database</p>
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+        {% endif %}
+
+    </main>
+
+    <script>
+        const productRatingsData  = {{ product_ratings_json|safe }};
+        const monthlyData         = {{ monthly_reviews_json|safe }};
+        const ratingDistData      = {{ rating_dist_json|safe }};
+        const priceData           = {{ price_data_json|safe }};
+        const revenueByProduct    = {{ revenue_by_product_json|safe }};
+        const revenueOverTime     = {{ revenue_over_time_json|safe }};
+
+        const GREEN = ['#1b4332','#2d6a4f','#40916c','#52b788','#74c69d','#95d5b2','#b7e4c7'];
+
+        Chart.defaults.font.family = 'Inter, system-ui, sans-serif';
+        Chart.defaults.color       = '#4a6b57';
+
+        function makeBar(id, labels, values, label) {
+            const ctx = document.getElementById(id);
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{ label, data: values, backgroundColor: GREEN[2], borderRadius: 6, borderSkipped: false }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        function makeLine(id, labels, values, label) {
+            const ctx = document.getElementById(id);
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{
+                        label,
+                        data: values,
+                        borderColor: GREEN[2],
+                        backgroundColor: 'rgba(64,145,108,0.08)',
+                        borderWidth: 2,
+                        pointBackgroundColor: GREEN[2],
+                        pointRadius: 4,
+                        tension: 0.35,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // Rating charts
+        if (productRatingsData.length > 0) {
+            const ctx = document.getElementById('productRatingsChart');
+            if (ctx) new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: productRatingsData.map(d => d.product),
+                    datasets: [{ label: 'Avg Rating', data: productRatingsData.map(d => d.avg_rating), backgroundColor: GREEN[2], borderRadius: 6, borderSkipped: false }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { min: 0, max: 5, ticks: { stepSize: 1 }, grid: { color: 'rgba(0,0,0,0.05)' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        if (ratingDistData.length > 0) {
+            const ctx = document.getElementById('ratingDistChart');
+            if (ctx) new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ratingDistData.map(d => d.stars + ' Star' + (d.stars > 1 ? 's' : '')),
+                    datasets: [{ data: ratingDistData.map(d => d.count), backgroundColor: GREEN.slice(0, ratingDistData.length), borderWidth: 2, borderColor: '#fff' }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: true,
+                    plugins: { legend: { position: 'bottom', labels: { padding: 16 } } },
+                    cutout: '60%',
+                }
+            });
+        }
+
+        if (monthlyData.length > 0) {
+            makeLine('monthlyChart', monthlyData.map(d => d.month), monthlyData.map(d => d.count), 'Reviews');
+        }
+
+        // Sales charts
+        if (revenueByProduct.length > 0) {
+            makeBar('revenueByProductChart', revenueByProduct.map(d => d.product_name), revenueByProduct.map(d => d.revenue), 'Revenue ($)');
+        }
+
+        if (revenueOverTime.length > 0) {
+            makeLine('revenueOverTimeChart', revenueOverTime.map(d => d.month), revenueOverTime.map(d => d.revenue), 'Revenue ($)');
+        }
+
+        // Products table
+        const tbody = document.getElementById('product-table-body');
+        if (tbody && priceData.length > 0) {
+            priceData.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${p.product_name}</td><td>$${parseFloat(p.price).toFixed(2)}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+    </script>
+
+    <script src="{% static 'store/js/common.js' %}"></script>
+</body>
+</html>

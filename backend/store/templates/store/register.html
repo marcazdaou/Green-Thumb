@@ -4,17 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register | Green Thumb</title>
+    <title>Green Thumb | Register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'store/css/nav.css' %}">
     <link rel="stylesheet" href="{% static 'store/css/account.css' %}">
 </head>
-<body class="auth-body" data-static-root="{% get_static_prefix %}">
+<body class="auth-body">
     {% include 'store/partials/navbar.html' %}
 
     <main class="auth-shell">
         <section class="auth-card">
-            <h1>Create an Account</h1>
-            <p class="auth-subtitle">Register to start shopping with Green Thumb.</p>
+            <h1>Create Account</h1>
+            <p class="auth-subtitle">Join Green Thumb and start shopping sustainably.</p>
 
             {% if form.non_field_errors %}
                 <div class="status-banner status-error">
@@ -37,12 +40,12 @@
                         {% endfor %}
                     </div>
                 {% endfor %}
-                <button type="submit" class="auth-button">Register</button>
+                <button type="submit" class="auth-button">Create Account</button>
             </form>
 
             <p class="auth-switch">
                 Already have an account?
-                <a href="{% url 'login' %}?next={{ next|urlencode }}">Go to Login</a>
+                <a href="{% url 'login' %}?next={{ next|urlencode }}">Sign in</a>
             </p>
         </section>
     </main>

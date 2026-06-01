@@ -6,13 +6,18 @@
     <a href="{% url 'home' %}" data-link="index">Home</a>
     <a href="{% url 'shop' %}" data-link="shop">Shop</a>
     <a href="{% url 'reviews' %}" data-link="reviews">Reviews</a>
+    <a href="{% url 'analytics' %}" data-link="analytics">Analytics</a>
     <a href="{% url 'about' %}" data-link="about">About</a>
+
+    <div class="nav-spacer"></div>
+
     {% if show_search %}
         <div class="search-box">
             <input id="product-search-input" type="text" placeholder="Search products...">
             <button id="product-search-button" type="button">Search</button>
         </div>
     {% endif %}
+
     <a class="cart-link" href="{% url 'cart' %}" data-link="cart" aria-label="Cart">
         &#128722;
         <span class="cart-count" id="cart-count">0</span>

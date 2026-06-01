@@ -2,59 +2,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title> GreenThumb </title>
-	<title>Home</title>
-  	<link rel="stylesheet" href="{% static 'store/css/nav.css' %}">
-	<link rel="stylesheet" href="{% static 'store/css/about.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Thumb | About</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'store/css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'store/css/about.css' %}">
 </head>
 
 <body data-page="about">
-<!-- ABOUT PAGE Contents Here-->
-{% include 'store/partials/navbar.html' %}
 
-<h1 style="text-align:center; margin-top:40px;">About Green Thumb</h1>
-<p class="about-text">
-Green Thumb is an online marketplace dedicated to promoting environmentally conscious living. 
-Our goal is to make eco-friendly and reusable products more accessible, helping people reduce 
-waste and make small everyday choices that support a greener planet.
-</p>
+    {% include 'store/partials/navbar.html' %}
 
-<div class="info-columns">
-        <div class="info-box">
-            <h2>Motto and Guiding Values</h2>
-            <p>
-                At Green Thumb, we believe that small choices can create lasting change.
-                Our values are rooted in sustainability, responsibility, and encouraging
-                everyday habits that protect the environment for future generations.
-            </p>
+    <div class="about-wrap">
+        <div class="about-header">
+            <h1>About Green Thumb</h1>
+            <p class="about-sub">Our mission is to make sustainable living accessible for everyone.</p>
         </div>
 
-<div class="info-box">
-            <h2>What Makes Us Special</h2>
-            <p>
-                Green Thumb stands out by offering products that are both practical and
-                eco-friendly. We focus on reusable items that fit naturally into daily life,
-                making sustainable shopping simple, meaningful, and accessible for everyone.
-            </p>
-        </div>
+        <p class="about-text">
+            Green Thumb is an online marketplace dedicated to promoting environmentally conscious living.
+            We make eco-friendly and reusable products more accessible, helping people reduce waste and
+            make everyday choices that support a greener planet.
+        </p>
 
- <div class="info-box">
-            <h2>Tips for Sustainable Living</h2>
-            <ul>
-                <li>Use reusable bottles, bags, and containers.</li>
-                <li>Choose products with less packaging.</li>
-                <li>Reuse items before replacing them.</li>
-                <li>Make small changes consistently over time.</li>
-            </ul>
+        <div class="info-columns">
+            <div class="info-box">
+                <h2>Our Values</h2>
+                <p>
+                    At Green Thumb, we believe small choices create lasting change.
+                    Our values are rooted in sustainability, responsibility, and encouraging
+                    everyday habits that protect the environment for future generations.
+                </p>
+            </div>
+            <div class="info-box">
+                <h2>What Sets Us Apart</h2>
+                <p>
+                    We offer products that are both practical and eco-friendly, focused on reusable
+                    items that fit naturally into daily life. Sustainable shopping should be simple,
+                    meaningful, and accessible for everyone.
+                </p>
+            </div>
+            <div class="info-box">
+                <h2>Tips for Sustainable Living</h2>
+                <ul>
+                    <li>Use reusable bottles, bags, and containers.</li>
+                    <li>Choose products with minimal packaging.</li>
+                    <li>Repair and reuse items before replacing them.</li>
+                    <li>Make small, consistent changes over time.</li>
+                </ul>
+            </div>
         </div>
     </div>
 
-  <script src="{% static 'store/js/about.js' %}"></script>
-  <script src="{% static 'store/js/common.js' %}"></script>
-
+    <script src="{% static 'store/js/common.js' %}"></script>
 </body>
-
-
 </html>

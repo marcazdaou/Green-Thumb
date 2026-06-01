@@ -1,138 +1,29 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GreenThumb | Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-
+    <title>Green Thumb | Home</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'store/css/nav.css' %}">
-    <link rel="stylesheet" href="{% static 'store/css/home.css' %}?v=99">
-    
-    <style>
-.info-columns {
-	display: flex;
-	justify-content: center;
-	flex-wrap: wrap;
-	gap: 30px;
-	max-width: 1200px;
-	margin: 0 auto 60px auto;
-	padding: 0 20px;
-}
-
-.info-box {
-	background: linear-gradient(145deg, #f7fff7, #edf8ee);
-	border: 1px solid rgba(160, 200, 160, 0.35);
-	border-radius: 20px;
-	padding: 25px;
-	width: 33%;
-	min-width: 260px;
-	box-sizing: border-box;
-	text-align: left;
-	box-shadow: 0 10px 24px rgba(60, 100, 60, 0.08);
-	transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-	position: relative;
-	overflow: hidden;
-	animation: fadeUp 0.8s ease;
-}
-
-.info-box::before {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 5px;
-	background: linear-gradient(90deg, #74c69d, #52b788, #40916c);
-}
-
-.info-box:hover {
-	transform: translateY(-8px) scale(1.02);
-	box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12);
-	border-color: #95d5b2;
-}
-
-@keyframes fadeUp {
-	from {
-		opacity: 0;
-		transform: translateY(20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-@media (max-width: 900px) {
-	.info-box {
-		width: 100%;
-	}
-}
-
-h1 {
-	text-align: center;
-	margin-top: 40px;
-	font-size: 2.5rem;
-	letter-spacing: 1px;
-	animation: fadeDown 0.8s ease;
-    color: #2d6a4f;
-
-
-}
-
-@keyframes fadeDown {
-	from {
-		opacity: 0;
-		transform: translateY(-20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-
-.hero-subtext {
-	animation: fadeUp 1s ease;
-    color: #2d6a4f;
-
-}
-@keyframes fadeUp {
-	from {
-		opacity: 0;
-		transform: translateY(20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-
-</style>
-
-        
-
-   <!-- <link rel="stylesheet" href="{% static 'store/css/home.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'store/css/home.css' %}">
 </head>
 
 <body data-page="index" data-static-root="{% get_static_prefix %}">
 
     {% include 'store/partials/navbar.html' %}
 
-    <div class="home-container"> 
+    <div class="home-container">
         <div class="hero-content">
-            <h1>Welcome To Green Thumb</h1>
+            <h1>Welcome to Green Thumb</h1>
             <p class="hero-subtext">
-                A place where we can make environmentally conscious choices by offering
-                reusable, eco-friendly products that reduce waste and support a greener lifestyle!
+                Eco-friendly and reusable products that help you reduce waste
+                and make choices that support a greener lifestyle.
             </p>
+            <a class="hero-btn" href="{% url 'shop' %}">Shop Now</a>
         </div>
 
         <section class="info-columns">
@@ -140,60 +31,17 @@ h1 {
                 <h2>Eco-Friendly Choices</h2>
                 <p>Discover simple ways to make more sustainable decisions every day.</p>
             </div>
-        
             <div class="info-box">
                 <h2>Reusable Products</h2>
                 <p>Explore practical items designed to reduce waste and support greener habits.</p>
             </div>
-        
             <div class="info-box">
                 <h2>Why It Matters</h2>
                 <p>Small changes in daily life can add up to a healthier planet over time.</p>
             </div>
         </section>
     </div>
-    
-    
-    
-        <div class="outer_generator">
-            <div class="inner_generator">
-    
-                <div class="plant_display">
-                    <div class="generated">
-                        <img id="generated_plant"
-                             class="generated"
-                             alt="plant"
-                             src="{% static 'images/plants/wheel.png' %}">
-                    </div>
-    
-                    <p id="generated_plant_description" class="generated"></p>
-                </div>
-    
-                <div class="generator-buttons">
-                    <button class="generate"
-                            id="generate_button"
-                            onclick="generate_plant()">
-                        Generate a Plant
-                    </button>
-    
-                    <button class="generate"
-                            id="shop_button"
-                            onclick="plant_in_shop()"
-                            style="visibility: hidden;">
-                        Add to Cart
-                    </button>
-                </div>
-    
-            </div>
-        </div>
-    </div>
-    
-    
-   
-    
 
-    <script src="{% static 'store/js/home.js' %}"></script>
     <script src="{% static 'store/js/common.js' %}"></script>
-
 </body>
 </html>

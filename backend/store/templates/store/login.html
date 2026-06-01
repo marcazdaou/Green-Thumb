@@ -4,22 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | Green Thumb</title>
+    <title>Green Thumb | Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'store/css/nav.css' %}">
     <link rel="stylesheet" href="{% static 'store/css/account.css' %}">
 </head>
-<body class="auth-body" data-static-root="{% get_static_prefix %}">
+<body class="auth-body">
     {% include 'store/partials/navbar.html' %}
 
     <main class="auth-shell">
         <section class="auth-card">
-            <h1>Login</h1>
-            <p class="auth-subtitle">Sign in to continue shopping.</p>
+            <h1>Sign In</h1>
+            <p class="auth-subtitle">Welcome back to Green Thumb.</p>
 
             {% if user.is_authenticated %}
                 <div class="status-banner status-success">
-                    You are logged in as <strong>{{ user.username }}</strong>.
-                    <a href="{% url 'logout' %}">Logout</a>
+                    You are signed in as <strong>{{ user.username }}</strong>.
+                    <a href="{% url 'logout' %}">Sign out</a>
                 </div>
             {% endif %}
 
@@ -41,12 +44,12 @@
                         {% endfor %}
                     </div>
                 {% endfor %}
-                <button type="submit" class="auth-button">Login</button>
+                <button type="submit" class="auth-button">Sign In</button>
             </form>
 
             <p class="auth-switch">
-                Do not have an account yet?
-                <a href="{% url 'register' %}?next={{ next|urlencode }}">Create an Account</a>
+                No account yet?
+                <a href="{% url 'register' %}?next={{ next|urlencode }}">Create one</a>
             </p>
         </section>
     </main>
