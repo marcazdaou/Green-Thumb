@@ -2,8 +2,7 @@
 
 A full-stack e-commerce web application for eco-friendly and reusable products. Built with Django, vanilla JavaScript, and pandas. Includes user authentication, a product catalog loaded from a database, customer reviews, a shopping cart, and a data analytics dashboard.
 
-Live demo: https://green-thumb-marc.onrender.com
-
+Live demo: https://green-thumb-bxmc.onrender.com
 ---
 
 ## Features
