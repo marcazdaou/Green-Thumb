@@ -1,0 +1,75 @@
+{% extends "store/base.html" %}
+{# Product page: price, real sales history, 'frequently bought together' and reviews. #}
+{% load static humanize %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block page %}shop{% endblock %}
+
+{% block content %}
+<a class="back-link" href="{% url 'shop' %}">&larr; Back to shop</a>
+
+<section class="product-detail">
+    <img class="product-detail-image" src="{{ product.image_url }}" alt="">
+    <div>
+        <span class="tag">{{ product.category }}</span>
+        <h1>{{ product.name }}</h1>
+        <p class="price price-large">£{{ product.price }}</p>
+        <div class="buy-row">
+            <div class="qty-group" aria-label="Quantity">
+                <button type="button" class="qty-step" data-step="-1" aria-label="Decrease">&minus;</button>
+                <span class="qty">1</span>
+                <button type="button" class="qty-step" data-step="1" aria-label="Increase">+</button>
+            </div>
+            <button class="btn add-to-cart" type="button" data-id="{{ product.pk }}" data-name="{{ product.name }}">Add to cart</button>
+        </div>
+
+        <dl class="facts">
+            <div><dt>Customers who bought it</dt><dd>{{ product.historical_customers|intcomma }}</dd></div>
+            <div><dt>Orders it appeared in</dt><dd>{{ product.historical_orders|intcomma }}</dd></div>
+            <div><dt>Units sold</dt><dd>{{ product.historical_units|intcomma }}</dd></div>
+        </dl>
+        <p class="footnote">Sales history from the original retailer, Dec 2009 &ndash; Dec 2011
+            (product code {{ product.stock_code }}). The image shows the type of product, not the exact item.</p>
+    </div>
+</section>
+
+{% if recommendations %}
+<section class="section">
+    <div class="section-head">
+        <h2>Frequently bought together</h2>
+    </div>
+    <p class="muted">Based on real orders: customers who bought this item also bought these, far more often than chance.</p>
+    <div class="reco-grid">
+        {% for r in recommendations %}
+            <a class="reco" href="{{ r.recommended.get_absolute_url }}">
+                <img src="{{ r.recommended.image_url }}" alt="">
+                <span class="reco-name">{{ r.recommended.name }}</span>
+                <span class="reco-stat">In {% widthratio r.confidence 1 100 %}% of these orders &middot; {{ r.lift|floatformat:1 }}&times; more often than chance</span>
+                <span class="price">£{{ r.recommended.price }}</span>
+            </a>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<section class="section" id="reviews">
+    <div class="section-head">
+        <h2>Reviews</h2>
+        {% if rating.n %}<span class="muted">&#9733; {{ rating.avg|floatformat:1 }} from {{ rating.n }} review{{ rating.n|pluralize }}</span>{% endif %}
+    </div>
+    {% for review in reviews %}
+        {% include "store/partials/review.html" with show_product=False %}
+    {% empty %}
+        <p class="empty">No reviews yet. Be the first to review this product.</p>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+        {% if not already_reviewed %}
+            {% include "store/partials/review_form.html" with fixed_product=product %}
+        {% endif %}
+    {% else %}
+        <p><a class="btn btn-ghost" href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Sign in to write a review</a></p>
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block scripts %}<script src="{% static 'store/js/shop.js' %}"></script>{% endblock %}

@@ -1,0 +1,10 @@
+# Website only (what the server needs). The data science pipeline has its own
+# requirements in ../requirements-analysis.txt.
+asgiref==3.11.1
+dj-database-url==3.1.2
+Django==5.2.12
+gunicorn==25.3.0
+psycopg2-binary==2.9.12
+sqlparse==0.5.5
+stripe==16.0.0
+whitenoise==6.4.0

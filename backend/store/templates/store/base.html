@@ -1,0 +1,37 @@
+{% load static %}<!DOCTYPE html>
+{# Shared layout for every page: <head>, navbar, flash messages, footer and common.js. #}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Green Thumb{% endblock %} | Green Thumb</title>
+    <meta name="description" content="Green Thumb: reusable and garden products, built on real retail data.">
+    {# Each page fills in the blocks below: title, page (highlights the nav link), content, scripts. #}
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'store/css/site.css' %}">
+    {% block head %}{% endblock %}
+</head>
+<body data-page="{% block page %}{% endblock %}">
+    {% include "store/partials/navbar.html" %}
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p class="message message-{{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <main class="page {% block main_class %}{% endblock %}">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "store/partials/footer.html" %}
+
+    <script src="{% static 'store/js/common.js' %}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,19 @@
+{# One product tile, used on the home and shop pages. Expects `product`. #}
+{% load static humanize %}
+<article class="product-card">
+    <a href="{{ product.get_absolute_url }}" class="product-image-link">
+        <img src="{{ product.image_url }}" alt="" loading="lazy">
+        <span class="tag">{{ product.category }}</span>
+    </a>
+    <div class="product-info">
+        <h3 class="product-name"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
+        <p class="product-meta">Bought by {{ product.historical_customers|intcomma }} customers
+            {% if product.n_reviews %}&middot; &#9733; {{ product.avg_stars|floatformat:1 }} ({{ product.n_reviews }}){% endif %}
+        </p>
+        <div class="product-buy">
+            <span class="price">£{{ product.price }}</span>
+            <button class="btn btn-small add-to-cart" type="button" data-id="{{ product.pk }}"
+                    data-name="{{ product.name }}">Add to cart</button>
+        </div>
+    </div>
+</article>

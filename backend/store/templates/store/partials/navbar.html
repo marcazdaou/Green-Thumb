@@ -1,0 +1,40 @@
+{# Top navigation. data-cart-key keeps each account's cart separate in the browser. #}
+<nav class="navbar" aria-label="Main"
+     data-cart-key="{% if user.is_authenticated %}cart:user:{{ user.id }}{% else %}cart:guest{% endif %}">
+    <a class="brand" href="{% url 'home' %}"><span class="brand-leaf" aria-hidden="true">&#127793;</span> Green Thumb</a>
+    <a href="{% url 'home' %}" data-link="home">Home</a>
+    <a href="{% url 'shop' %}" data-link="shop">Shop</a>
+    <a href="{% url 'insights' %}" data-link="insights">Insights</a>
+    <a href="{% url 'reviews' %}" data-link="reviews">Reviews</a>
+    <a href="{% url 'about' %}" data-link="about">About</a>
+
+    <div class="nav-spacer"></div>
+
+    <form class="search-box" action="{% url 'shop' %}" method="get" role="search">
+        <input name="q" type="search" placeholder="Search products" aria-label="Search products"
+               value="{{ query|default:'' }}">
+    </form>
+
+    <a class="cart-link" href="{% url 'cart' %}" data-link="cart" aria-label="Cart">
+        &#128722;<span class="cart-count" id="cart-count">0</span>
+    </a>
+
+    {% if user.is_authenticated %}
+        <div class="account-menu">
+            <button class="account-link account-toggle" type="button" aria-label="Account"
+                    aria-haspopup="true" aria-expanded="false">&#128100;</button>
+            <div class="account-dropdown" hidden>
+                <p class="account-eyebrow">Signed in as</p>
+                <p class="account-name">{{ user.get_full_name|default:user.username }}</p>
+                <p class="account-meta">@{{ user.username }} &middot; member since {{ user.date_joined|date:"M Y" }}</p>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    <button type="submit" class="account-signout">Sign out</button>
+                </form>
+            </div>
+        </div>
+    {% else %}
+        <a class="account-link" href="{% url 'login' %}?next={{ request.get_full_path|urlencode }}">Sign in</a>
+    {% endif %}
+</nav>

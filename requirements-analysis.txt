@@ -1,0 +1,7 @@
+# Data science pipeline (python -m analysis.run_pipeline)
+numpy==2.5.4
+pandas==3.0.3
+scipy==1.18.1
+scikit-learn==1.9.1
+pyarrow==26.0.0     # Parquet cache of the raw data
+openpyxl==3.1.5     # reads the original Excel file

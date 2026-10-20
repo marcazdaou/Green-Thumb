@@ -1,0 +1,244 @@
+{% extends "store/base.html" %}
+{# Insights dashboard: text and tables rendered here; charts drawn by insights/js/dashboard.js from the embedded JSON. #}
+{% load static humanize %}
+{% block title %}Insights{% endblock %}
+{% block page %}insights{% endblock %}
+{% block main_class %}insights{% endblock %}
+{% block head %}<link rel="stylesheet" href="{% static 'insights/css/insights.css' %}">{% endblock %}
+
+{% block content %}
+{% if not results %}
+    <div class="card"><h1>Insights</h1>
+        <p>No results yet. From the repository root run <code>python -m analysis.run_pipeline</code>.</p></div>
+{% else %}
+{% with k=results.overview.kpis f=findings p=results.prediction %}
+
+<header class="dash-head">
+    <p class="eyebrow">Data science &middot; real transactions</p>
+    <h1>What a million real retail transactions reveal</h1>
+    <p class="lead">An analysis of every sale made by a UK online retailer between {{ k.start }} and {{ k.end }}
+        ({{ results.dataset.name }}, {{ results.dataset.publisher }}). The store's catalog and recommendations are built from the same data.</p>
+    <nav class="dash-nav" aria-label="Sections">
+        <a href="#overview">Overview</a><a href="#customers">Customers</a><a href="#prediction">Prediction</a>
+        <a href="#baskets">Bought together</a><a href="#method">Data &amp; method</a><a href="#store">This store</a>
+    </nav>
+</header>
+
+<section class="kpis" aria-label="Key figures">
+    <div class="kpi"><span class="kpi-value">£{{ k.revenue|floatformat:"0"|intcomma }}</span><span class="kpi-label">Revenue (cleaned)</span></div>
+    <div class="kpi"><span class="kpi-value">{{ k.orders|intcomma }}</span><span class="kpi-label">Orders</span></div>
+    <div class="kpi"><span class="kpi-value">{{ k.customers|intcomma }}</span><span class="kpi-label">Identified customers</span></div>
+    <div class="kpi"><span class="kpi-value">£{{ k.median_order_value|floatformat:"0" }}</span><span class="kpi-label">Median order value</span></div>
+    <div class="kpi"><span class="kpi-value">{% widthratio k.return_rate 1 100 %}%</span><span class="kpi-label">Value later cancelled</span></div>
+    <div class="kpi"><span class="kpi-value">{% if f.yoy_percent >= 0 %}+{% endif %}{{ f.yoy_percent|floatformat:1 }}%</span>
+        <span class="kpi-label">Revenue growth, 2011 vs 2010 (Jan&ndash;Nov)</span></div>
+</section>
+
+<!-- ── Overview ─────────────────────────────────────────────────────────── -->
+<section id="overview" class="dash-section">
+    <h2>1. When and where the business sells</h2>
+    <div class="grid-2">
+        <figure class="chart-card">
+            <figcaption><strong>Revenue by month.</strong> Sales peak every autumn ahead of Christmas;
+                the highest full month was {{ f.peak_month.month }} at £{{ f.peak_month.revenue|floatformat:"0"|intcomma }}.
+                The final month is partial (data ends {{ k.end }}).</figcaption>
+            <div class="chart" id="chart-monthly"></div>
+        </figure>
+        <figure class="chart-card">
+            <figcaption><strong>When orders are placed.</strong> Orders per weekday and hour (UK time). The busiest day is
+                {{ f.busiest_day }} and the busiest hour {{ f.busiest_hour }}:00. Only {{ f.saturday_orders|intcomma }} of {{ k.orders|intcomma }} orders were placed on a Saturday,
+                consistent with a seller whose customers are mostly businesses.</figcaption>
+            <div class="chart" id="chart-weekly"></div>
+        </figure>
+    </div>
+    <div class="grid-2">
+        <figure class="chart-card">
+            <figcaption><strong>Revenue by country.</strong> The UK accounts for {% widthratio f.uk_share 1 100 %}% of revenue. Hover a bar for the number of customers behind it: some countries' revenue comes from just a handful of large wholesale buyers.</figcaption>
+            <div class="chart" id="chart-countries"></div>
+        </figure>
+        <figure class="chart-card">
+            <figcaption><strong>Best-selling products by revenue.</strong></figcaption>
+            <div class="chart" id="chart-products"></div>
+        </figure>
+    </div>
+</section>
+
+<!-- ── Customers ────────────────────────────────────────────────────────── -->
+<section id="customers" class="dash-section">
+    <h2>2. Who the customers are, and whether they come back</h2>
+    <div class="callout">
+        <strong>{{ f.top_segment.segment }}</strong> are {% widthratio f.top_segment.customer_share 1 100 %}% of customers but bring in
+        {% widthratio f.top_segment.revenue_share 1 100 %}% of revenue. On average, {% widthratio results.cohorts.avg_month1 1 100 %}% of new
+        customers order again the following month.
+    </div>
+    <div class="grid-2">
+        <figure class="chart-card">
+            <figcaption><strong>Customer segments (RFM + k-means, k = {{ results.segments.k }}).</strong>
+                Share of customers vs. share of revenue for each segment. Segments come from clustering
+                {{ results.segments.n_customers|intcomma }} customers on recency, frequency and spend.</figcaption>
+            <div class="chart" id="chart-segments"></div>
+        </figure>
+        <figure class="chart-card">
+            <figcaption><strong>Segment profiles.</strong> Medians per customer in each segment.</figcaption>
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead><tr><th>Segment</th><th>Customers</th><th>Days since last order</th><th>Orders</th><th>Total spend</th></tr></thead>
+                    <tbody>
+                    {% for s in results.segments.segments %}
+                        <tr><td>{{ s.segment }}</td><td>{{ s.customers|intcomma }}</td>
+                            <td>{{ s.recency|floatformat:"0" }}</td><td>{{ s.frequency|floatformat:"0" }}</td><td>£{{ s.monetary|floatformat:"0"|intcomma }}</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <p class="footnote">k was chosen by silhouette score among 3&ndash;6 clusters (k = 2 scores higher but is too coarse to act on).
+                Silhouette by k: {% for kk, v in results.segments.silhouette.items %}{{ kk }}: {{ v|floatformat:2 }}{% if not forloop.last %} &middot; {% endif %}{% endfor %}.</p>
+        </figure>
+    </div>
+    <figure class="chart-card">
+        <figcaption><strong>Cohort retention.</strong> Each row is the month customers first ordered; each column is months later.
+            Cells show the share of that cohort that ordered again. Blank cells are not observable yet.</figcaption>
+        <div class="chart chart-tall" id="chart-cohorts"></div>
+    </figure>
+</section>
+
+<!-- ── Prediction ───────────────────────────────────────────────────────── -->
+<section id="prediction" class="dash-section">
+    <h2>3. Predicting who will buy again in the next {{ p.horizon_days }} days</h2>
+    <div class="callout">
+        The <strong>{{ p.best_model|lower }}</strong> model ranks customers with ROC AUC
+        <strong>{{ f.best.roc_auc|floatformat:3 }}</strong> (95% CI {{ f.best.auc_ci_low|floatformat:3 }}&ndash;{{ f.best.auc_ci_high|floatformat:3 }}),
+        better than a simple "most recent customers first" rule ({{ f.baseline.roc_auc|floatformat:3 }}). A paired bootstrap puts the improvement at
+        +{{ f.vs_baseline.difference|floatformat:3 }} (95% CI +{{ f.vs_baseline.ci_low|floatformat:3 }} to +{{ f.vs_baseline.ci_high|floatformat:3 }}).
+        Among the 10% of customers it scores highest, {% widthratio f.top_decile.rate 1 100 %}% bought again, versus {% widthratio p.base_rate_test 1 100 %}% overall.
+    </div>
+    <div class="grid-2">
+        <figure class="chart-card">
+            <figcaption><strong>Model comparison on the future test period</strong> (ROC AUC with 95% bootstrap intervals; 0.5 = random guessing).</figcaption>
+            <div class="chart" id="chart-models"></div>
+        </figure>
+        <figure class="chart-card">
+            <figcaption><strong>ROC curve</strong> of the {{ p.best_model|lower }} model vs. the recency baseline.</figcaption>
+            <div class="chart" id="chart-roc"></div>
+        </figure>
+    </div>
+    <div class="grid-2">
+        <figure class="chart-card">
+            <figcaption><strong>Repurchase rate by predicted decile.</strong> Decile 1 = customers the model rates most likely to return.</figcaption>
+            <div class="chart" id="chart-lift"></div>
+        </figure>
+        <figure class="chart-card">
+            <figcaption><strong>Calibration.</strong> Predicted vs. actual repurchase rate. The model predicted {% widthratio f.mean_predicted 1 100 %}% on average
+                but {% widthratio f.mean_observed 1 100 %}% returned: the test window is the holiday season, when more customers come back than in the
+                training periods ({% widthratio p.base_rate_train 1 100 %}% vs {% widthratio p.base_rate_test 1 100 %}%). The ranking holds; the absolute probabilities
+                would need seasonal recalibration.</figcaption>
+            <div class="chart" id="chart-calibration"></div>
+        </figure>
+    </div>
+    <figure class="chart-card">
+        <figcaption><strong>What drives the prediction.</strong> Drop in test ROC AUC when each feature is randomly shuffled (permutation importance).</figcaption>
+        <div class="chart" id="chart-importance"></div>
+    </figure>
+    <p class="footnote">Training: {{ p.n_train|intcomma }} customer snapshots taken on {{ p.train_snapshots|join:", " }}. Test: {{ p.n_test|intcomma }} customers
+        on {{ p.test_snapshot }}. Every training label window ends before the test snapshot, so the model is always scored on its future.</p>
+</section>
+
+<!-- ── Baskets ──────────────────────────────────────────────────────────── -->
+<section id="baskets" class="dash-section">
+    <h2>4. What is bought together</h2>
+    {% if f.top_rule %}
+    <div class="callout">
+        Market basket analysis of {{ results.baskets.n_baskets|intcomma }} multi-item orders found {{ results.baskets.n_pairs|intcomma }} product
+        pairs bought together in at least {{ results.baskets.min_pair_baskets }} orders. These rules power the store's
+        "Frequently bought together" suggestions.
+    </div>
+    {% endif %}
+    <figure class="chart-card">
+        <figcaption><strong>Strongest rules</strong> (confidence &ge; 50%, sorted by lift). <em>Confidence</em> = share of orders with the first
+            item that also contain the second; <em>lift</em> = how many times more often than if purchases were independent.</figcaption>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead><tr><th>If a customer buys</th><th>they also buy</th><th>Orders</th><th>Confidence</th><th>Lift</th></tr></thead>
+                <tbody>
+                {% for r in results.baskets.top_rules %}
+                    <tr><td>{{ r.if_bought }}</td><td>{{ r.also_buy }}</td><td>{{ r.baskets|intcomma }}</td>
+                        <td>{% widthratio r.confidence 1 100 %}%</td><td>{{ r.lift|floatformat:0 }}&times;</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </figure>
+    {% if f.rec_eval %}{% with e=results.baskets.evaluation r=f.rec_eval %}
+    <div class="callout">
+        <strong>Do the suggestions actually work?</strong> Rules learned only from orders before {{ e.cutoff }} were tested on the
+        {{ e.test_baskets|intcomma }} orders placed after it. With 3 suggestions per product, at least one was in the same order
+        <strong>{% widthratio r.rules 1 100 %}%</strong> of the time, versus {% widthratio r.popular 1 100 %}% for simply suggesting the
+        3 best-sellers: +{% widthratio r.difference 1 100 %} percentage points (paired 95% CI +{% widthratio r.difference_ci.0 1 100 %} to
+        +{% widthratio r.difference_ci.1 1 100 %}). A real but modest gain: in a wholesale shop with large orders, best-sellers are a strong baseline.
+    </div>
+    <figure class="chart-card">
+        <figcaption><strong>Hit rate on later orders: basket rules vs best-sellers</strong>. Share of cases where at least one of the
+            top <em>K</em> suggestions was in the same order. Error bars: 95% bootstrap CI (resampling orders).</figcaption>
+        <div class="chart" id="chart-rec-eval"></div>
+    </figure>
+    {% endwith %}{% endif %}
+</section>
+
+<!-- ── Method ───────────────────────────────────────────────────────────── -->
+<section id="method" class="dash-section">
+    <h2>5. Data and method</h2>
+    <div class="grid-2">
+        <figure class="chart-card">
+            <figcaption><strong>Cleaning funnel.</strong> Rows kept after each rule.</figcaption>
+            <div class="chart" id="chart-funnel"></div>
+        </figure>
+        <div class="card method">
+            <h3>Cleaning rules</h3>
+            <ol>
+                <li>Remove exact duplicate rows.</li>
+                <li>Set cancellations aside (used for the return rate).</li>
+                <li>Remove sales fully reversed by a later cancellation (same customer, product and quantity).</li>
+                <li>Keep real products only (drop postage, fees, adjustments, vouchers).</li>
+                <li>Keep positive quantities and prices.</li>
+            </ol>
+            <h3>Limitations</h3>
+            <ul>
+                <li>One retailer, mostly business customers; results describe this business, not retail in general.</li>
+                <li>{% widthratio results.funnel.rows_with_customer_id results.funnel.clean_rows 100 %}% of sales lines have a customer ID; customer analyses use those only.</li>
+                <li>Basket rules and segments are associations, not causal effects.</li>
+            </ul>
+            <p class="footnote">{{ results.dataset.citation }} License: {{ results.dataset.license }}.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ── This store ───────────────────────────────────────────────────────── -->
+<section id="store" class="dash-section">
+    <h2>6. This store's own activity</h2>
+    <p class="muted">Live from this site's database: orders and reviews placed here, kept separate from the research data above.</p>
+    <div class="kpis kpis-small">
+        <div class="kpi"><span class="kpi-value">{{ activity.orders }}</span><span class="kpi-label">Orders on this site</span></div>
+        <div class="kpi"><span class="kpi-value">£{{ activity.revenue|floatformat:2 }}</span><span class="kpi-label">Value of these orders</span></div>
+        <div class="kpi"><span class="kpi-value">{{ activity.reviews }}</span><span class="kpi-label">Reviews</span></div>
+        <div class="kpi"><span class="kpi-value">{% if activity.avg_stars %}{{ activity.avg_stars|floatformat:1 }} &#9733;{% else %}&ndash;{% endif %}</span><span class="kpi-label">Average rating</span></div>
+    </div>
+    {% if activity.by_month %}
+    <div class="grid-2">
+        <figure class="chart-card"><figcaption><strong>Orders per month on this site</strong></figcaption><div class="chart" id="chart-store-months"></div></figure>
+        <figure class="chart-card"><figcaption><strong>Order value by product on this site</strong></figcaption><div class="chart" id="chart-store-products"></div></figure>
+    </div>
+    {% else %}
+        <p class="empty">No orders yet. Place one from the <a href="{% url 'shop' %}">shop</a> and it will appear here.</p>
+    {% endif %}
+</section>
+
+{{ results|json_script:"results-data" }}
+{{ activity|json_script:"activity-data" }}
+{% endwith %}
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js" defer></script>
+<script src="{% static 'insights/js/dashboard.js' %}" defer></script>
+{% endblock %}

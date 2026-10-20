@@ -1,0 +1,32 @@
+{% extends "store/base.html" %}
+{# Return page after Stripe Checkout. "Paid" is only shown once Stripe itself has confirmed the payment. #}
+{% load static %}
+{% block title %}Order confirmation{% endblock %}
+{% block page %}checkout{% endblock %}
+
+{% block content %}
+<section class="card confirmation">
+    {% if order and order.status == "paid" %}
+        <div class="success-icon" aria-hidden="true">&#10003;</div>
+        <h1>Payment received</h1>
+        <p>Order #{{ order.pk }} for £{{ order.total }} was paid in <strong>Stripe test mode</strong>.
+            No real money moved and nothing will be shipped.</p>
+        <ul class="confirmation-lines">
+            {% for item in order.items.all %}
+                <li><span>{{ item.quantity }} &times; {{ item.product.name }}</span><span>£{{ item.line_total }}</span></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h1>Payment not confirmed</h1>
+        <p>We could not confirm a payment for this order. Nothing was charged. You can go back to your cart and try again.</p>
+    {% endif %}
+    <div class="confirmation-actions">
+        <a class="btn" href="{% url 'shop' %}">Keep shopping</a>
+        <a class="btn btn-ghost" href="{% url 'cart' %}">View cart</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+{% if order and order.status == "paid" %}<script src="{% static 'store/js/order_paid.js' %}"></script>{% endif %}
+{% endblock %}

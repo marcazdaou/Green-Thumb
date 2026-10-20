@@ -1,0 +1,43 @@
+{% extends "store/base.html" %}
+{# All reviews: rating summary, review form for signed-in users, and the list of reviews. #}
+{% block title %}Reviews{% endblock %}
+{% block page %}reviews{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <h1>Customer reviews</h1>
+    <p class="muted">Reviews written by people using this store. Every review is tied to a signed-in account and a product.</p>
+</div>
+
+<div class="reviews-layout">
+    <aside class="rating-summary card">
+        {% if total %}
+            <p class="avg-number">{{ average|floatformat:1 }}</p>
+            <p class="muted">average from {{ total }} review{{ total|pluralize }}</p>
+            {% for row in rows %}
+                <div class="rating-row">
+                    <span class="rating-label">{{ row.stars }} &#9733;</span>
+                    <span class="bar"><span class="bar-fill" style="width: {{ row.percent }}%"></span></span>
+                    <span class="rating-count">{{ row.count }}</span>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="muted">No reviews yet.</p>
+        {% endif %}
+    </aside>
+
+    <section>
+        {% if user.is_authenticated %}
+            {% include "store/partials/review_form.html" %}
+        {% else %}
+            <div class="card review-signin"><a class="btn btn-ghost" href="{% url 'login' %}?next={% url 'reviews' %}">Sign in to write a review</a></div>
+        {% endif %}
+
+        {% for review in reviews %}
+            {% include "store/partials/review.html" with show_product=True %}
+        {% empty %}
+            <p class="empty">No reviews yet. Pick a product and share what you think.</p>
+        {% endfor %}
+    </section>
+</div>
+{% endblock %}

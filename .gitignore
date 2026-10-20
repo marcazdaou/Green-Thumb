@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Secrets
+.env
+*.env
+
+# Django: local database and collected static files (built at deploy time)
+db.sqlite3
+backend/staticfiles/
+
+# Raw dataset (downloaded by the pipeline, ~45 MB)
+data/raw/
+
+# Editors / OS
+.vscode/
+.DS_Store
+Thumbs.db

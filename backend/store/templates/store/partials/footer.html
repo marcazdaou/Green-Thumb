@@ -1,0 +1,16 @@
+{# Site footer with links and the dataset credit. #}
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div>
+            <strong>Green Thumb</strong>
+            <p>A store and data science project built on real retail transactions.</p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer">
+            <a href="{% url 'shop' %}">Shop</a>
+            <a href="{% url 'insights' %}">Insights</a>
+            <a href="{% url 'reviews' %}">Reviews</a>
+            <a href="{% url 'about' %}">About the data</a>
+        </nav>
+    </div>
+    <p class="footer-credit">Data: Chen, D. (2012). Online Retail II. UCI Machine Learning Repository (CC BY 4.0).</p>
+</footer>

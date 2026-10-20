@@ -1,0 +1,48 @@
+/* Insights dashboard: builds on site.css tokens. */
+
+.insights { max-width: 1240px; }
+.dash-head { padding: 12px 0 8px; }
+.dash-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.dash-nav a {
+  text-decoration: none; color: var(--ink-2); border: 1px solid var(--line); background: #fff;
+  padding: 6px 12px; border-radius: 999px; font-size: 0.84rem; font-weight: 500;
+}
+.dash-nav a:hover { background: var(--mint-soft); color: var(--ink); }
+
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 22px 0 8px; }
+.kpi { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; display: grid; gap: 2px; }
+.kpi-value { font-size: 1.45rem; font-weight: 750; color: var(--ink); }
+.kpi-label { font-size: 0.78rem; color: var(--ink-2); }
+.kpis-small .kpi-value { font-size: 1.2rem; }
+
+.dash-section { margin-top: 44px; scroll-margin-top: 80px; }
+.dash-section > h2 { font-size: 1.35rem; margin-bottom: 14px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+
+.chart-card { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 16px 8px; box-shadow: var(--shadow); min-width: 0; }
+.chart-card + .chart-card { margin-top: 0; }
+.chart-card figcaption { font-size: 0.86rem; color: var(--ink-2); margin-bottom: 8px; line-height: 1.45; }
+.chart-card figcaption strong { color: var(--ink); }
+.chart { width: 100%; height: 320px; }
+.chart-tall { height: 560px; }
+section > .chart-card { margin-bottom: 16px; }
+
+.callout {
+  background: #eef7f1; border: 1px solid #c6e6d3; border-left: 4px solid var(--green);
+  border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; font-size: 0.95rem; line-height: 1.55;
+}
+
+.table-wrap { overflow-x: auto; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; font-variant-numeric: tabular-nums; }
+.data-table th { text-align: left; font-weight: 600; color: var(--muted); font-size: 0.76rem; text-transform: uppercase;
+                 letter-spacing: 0.04em; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.data-table td { padding: 8px 10px; border-bottom: 1px solid #eef1ec; }
+.data-table tbody tr:hover { background: #f7faf6; }
+
+.method h3 { margin-top: 4px; }
+.method ol, .method ul { padding-left: 20px; color: var(--ink-2); font-size: 0.9rem; display: grid; gap: 4px; }
+
+@media (max-width: 900px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .chart-tall { height: 640px; }
+}

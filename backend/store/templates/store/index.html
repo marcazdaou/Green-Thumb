@@ -1,0 +1,56 @@
+{% extends "store/base.html" %}
+{# Home page: intro, headline numbers from the real dataset, the four most popular products. #}
+{% load static humanize %}
+{% block title %}Home{% endblock %}
+{% block page %}home{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <p class="eyebrow">Reusable &middot; Garden &middot; Real data</p>
+    <h1>Everyday reusable goods, chosen by what real customers buy.</h1>
+    <p class="lead">
+        Reusable bags, lunch and picnic gear, and garden goods. Every product, price and recommendation
+        comes from the real sales records of a UK online retailer.
+    </p>
+    <div class="hero-actions">
+        <a class="btn" href="{% url 'shop' %}">Shop the catalog</a>
+        <a class="btn btn-ghost" href="{% url 'insights' %}">See the data science</a>
+    </div>
+</section>
+
+{% if kpis %}
+<section class="stat-strip" aria-label="About the data">
+    <div><strong>{{ kpis.orders|intcomma }}</strong><span>real orders analyzed</span></div>
+    <div><strong>{{ kpis.customers|intcomma }}</strong><span>customers in {{ kpis.countries }} countries</span></div>
+    <div><strong>£{{ kpis.revenue|floatformat:"0"|intcomma }}</strong><span>in sales, Dec 2009 &ndash; Dec 2011</span></div>
+    <div><strong>{{ kpis.products|intcomma }}</strong><span>products in the retailer's range</span></div>
+</section>
+{% endif %}
+
+<section class="section">
+    <div class="section-head">
+        <h2>Most popular right now</h2>
+        <a href="{% url 'shop' %}">View all &rarr;</a>
+    </div>
+    <div class="products-grid">
+        {% for product in featured %}{% include "store/partials/product_card.html" %}{% endfor %}
+    </div>
+</section>
+
+<section class="feature-columns">
+    <div class="feature">
+        <h3>Real products, real prices</h3>
+        <p>The catalog is the most-bought reusable and garden items in the retailer's 2009&ndash;2011 sales, at its typical selling price.</p>
+    </div>
+    <div class="feature">
+        <h3>Recommendations from real baskets</h3>
+        <p>"Frequently bought together" suggestions come from analyzing 36,000+ real orders.</p>
+    </div>
+    <div class="feature">
+        <h3>Open data science</h3>
+        <p>Customer segments, a repurchase prediction model and cohort retention are on the <a href="{% url 'insights' %}">Insights</a> page.</p>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}<script src="{% static 'store/js/shop.js' %}"></script>{% endblock %}

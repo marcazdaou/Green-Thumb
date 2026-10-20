@@ -1,0 +1,45 @@
+{% extends "store/base.html" %}
+{# Shop: product grid with category filter, search and sort (all handled by shop_view on the server). #}
+{% load static %}
+{% block title %}Shop{% endblock %}
+{% block page %}shop{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <h1>Shop</h1>
+    <p class="muted">{{ products|length }} product{{ products|length|pluralize }}{% if query %} matching &ldquo;{{ query }}&rdquo;{% endif %}.
+        Prices in British pounds, as charged by the original retailer.</p>
+</div>
+
+<form class="filters" method="get" action="{% url 'shop' %}">
+    <div class="pills" role="group" aria-label="Category">
+        <a class="pill {% if not category %}active{% endif %}" href="?{% if query %}q={{ query|urlencode }}&{% endif %}sort={{ sort }}">All</a>
+        {% for c in categories %}
+            <a class="pill {% if c == category %}active{% endif %}"
+               href="?category={{ c|urlencode }}{% if query %}&q={{ query|urlencode }}{% endif %}&sort={{ sort }}">{{ c }}</a>
+        {% endfor %}
+    </div>
+    <input type="hidden" name="category" value="{{ category }}">
+    {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
+    <label class="sort">Sort by
+        <select name="sort" onchange="this.form.submit()">
+            <option value="popular" {% if sort == "popular" %}selected{% endif %}>Most popular</option>
+            <option value="price_low" {% if sort == "price_low" %}selected{% endif %}>Price: low to high</option>
+            <option value="price_high" {% if sort == "price_high" %}selected{% endif %}>Price: high to low</option>
+            <option value="name" {% if sort == "name" %}selected{% endif %}>Name</option>
+        </select>
+    </label>
+</form>
+
+{% if products %}
+    <div class="products-grid">
+        {% for product in products %}{% include "store/partials/product_card.html" %}{% endfor %}
+    </div>
+{% else %}
+    <p class="empty">No products match your search. <a href="{% url 'shop' %}">Show all products</a></p>
+{% endif %}
+
+<p class="footnote">Images show the type of product, not the exact item.</p>
+{% endblock %}
+
+{% block scripts %}<script src="{% static 'store/js/shop.js' %}"></script>{% endblock %}

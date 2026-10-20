@@ -1,0 +1,17 @@
+{# One review. The delete button only shows to the review's author. #}
+<article class="review">
+    <div class="review-head">
+        <span class="stars" aria-label="{{ review.stars }} out of 5 stars">{% for i in "12345" %}{% if forloop.counter <= review.stars %}&#9733;{% else %}&#9734;{% endif %}{% endfor %}</span>
+        <span class="review-author">{{ review.user.get_full_name|default:review.user.username }}</span>
+        <span class="muted">&middot; {{ review.created_at|date:"j M Y" }}</span>
+    </div>
+    {% if show_product %}<a class="review-product" href="{{ review.product.get_absolute_url }}">{{ review.product.name }}</a>{% endif %}
+    <p class="review-text">{{ review.text }}</p>
+    {% if user == review.user %}
+        <form method="post" action="{% url 'delete_review' review.pk %}" class="inline-form">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+            <button class="link-button" type="submit">Delete my review</button>
+        </form>
+    {% endif %}
+</article>

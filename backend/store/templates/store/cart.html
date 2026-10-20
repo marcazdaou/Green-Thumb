@@ -1,0 +1,44 @@
+{% extends "store/base.html" %}
+{# Cart: an empty shell that cart.js fills using prices from /api/cart/; checkout posts to /api/checkout/
+   and, when Stripe is configured, continues on Stripe's hosted test-mode payment page. #}
+{% load static %}
+{% block title %}Cart{% endblock %}
+{% block page %}cart{% endblock %}
+
+{% block content %}
+<div class="page-head"><h1>Your cart</h1></div>
+
+<div class="cart-layout">
+    <section id="cart-lines" aria-live="polite">
+        <p class="muted" id="cart-loading">Loading your cart&hellip;</p>
+    </section>
+
+    <aside class="order-summary card">
+        <h2>Order summary</h2>
+        <div class="summary-row"><span>Subtotal</span><span id="cart-subtotal">£0.00</span></div>
+        <div class="summary-row"><span>Shipping</span><span>Free</span></div>
+        <div class="summary-row summary-total"><span>Total</span><span id="cart-total">£0.00</span></div>
+        {% if stripe_enabled %}
+            {# Stripe test mode: the shopper pays on Stripe's page with a test card; no real money moves. #}
+            <p class="test-mode-note"><strong>Stripe test mode.</strong> Pay with test card <code>{{ test_card }}</code>,
+                any future date and any CVC. No real money moves and nothing is shipped.</p>
+            <button class="btn btn-block" id="checkout-button" type="button" data-stripe="1" disabled>Pay with Stripe (test mode)</button>
+        {% else %}
+            <p class="footnote">Portfolio project: placing an order records it, but no payment is taken and nothing is shipped.</p>
+            <button class="btn btn-block" id="checkout-button" type="button" disabled>Place order</button>
+        {% endif %}
+        <p class="form-error" id="cart-error" hidden></p>
+    </aside>
+</div>
+
+<div class="modal" id="order-modal" hidden>
+    <div class="modal-box card" role="dialog" aria-labelledby="order-title">
+        <div class="success-icon" aria-hidden="true">&#10003;</div>
+        <h2 id="order-title">Order placed</h2>
+        <p id="order-detail"></p>
+        <a class="btn" href="{% url 'shop' %}">Keep shopping</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}<script src="{% static 'store/js/cart.js' %}"></script>{% endblock %}

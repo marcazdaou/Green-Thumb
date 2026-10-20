@@ -1,0 +1,56 @@
+{% extends "store/base.html" %}
+{# About: where the data comes from, what is real, and how the project is built. #}
+{% load humanize %}
+{% block title %}About{% endblock %}
+{% block page %}about{% endblock %}
+
+{% block content %}
+<div class="page-head">
+    <h1>About Green Thumb</h1>
+    <p class="lead">A full-stack store and a data science project in one: the shop runs on Django, and everything it sells and
+        recommends is derived from real retail transactions.</p>
+</div>
+
+<div class="about-grid">
+    <section class="card">
+        <h2>The data</h2>
+        {% if results %}
+            <p><strong>{{ results.dataset.name }}</strong> ({{ results.dataset.publisher }}, {{ results.dataset.license }}):
+                {{ results.dataset.description }}</p>
+            <p>It contains {{ results.funnel.raw_rows|intcomma }} transaction lines from
+                {{ results.overview.kpis.start }} to {{ results.overview.kpis.end }}. After cleaning,
+                {{ results.funnel.clean_rows|intcomma }} sales lines remain.</p>
+            <p class="footnote">{{ results.dataset.citation }}</p>
+        {% else %}
+            <p>Run <code>python -m analysis.run_pipeline</code> to build the results.</p>
+        {% endif %}
+    </section>
+
+    <section class="card">
+        <h2>What is real</h2>
+        <ul class="checklist">
+            <li><strong>Real:</strong> product names, categories, prices (GBP), sales history and "frequently bought together" links.</li>
+            <li><strong>Real:</strong> every number and chart on the <a href="{% url 'insights' %}">Insights</a> page.</li>
+            {% if stripe_enabled %}
+                <li><strong>Checkout:</strong> payments run through Stripe in test mode: a real payment integration, but only
+                    test cards work, so no real money moves and nothing is shipped.</li>
+            {% else %}
+                <li><strong>Checkout:</strong> orders are recorded so the site works end to end, but no payment is taken and nothing is shipped.</li>
+            {% endif %}
+            <li><strong>Photos:</strong> product photos show the type of product, not the exact item.</li>
+        </ul>
+    </section>
+
+    <section class="card">
+        <h2>How it is built</h2>
+        <ul class="checklist">
+            <li><strong>Data pipeline</strong> (pandas): cleaning, cancellation matching, business metrics.</li>
+            <li><strong>Machine learning</strong> (scikit-learn): customer segmentation and a repurchase model with out-of-time validation.</li>
+            <li><strong>Market basket analysis</strong> (SciPy sparse matrices): association rules behind the recommendations.</li>
+            <li><strong>Web app</strong> (Django): server-side pricing, relational schema with foreign keys, authentication and an admin panel.</li>
+            <li><strong>Payments</strong> (Stripe Checkout, test mode): hosted payment page and signature-verified webhooks; card details never touch this server.</li>
+            <li><strong>Tests</strong> (pytest) for the pipeline and the web app.</li>
+        </ul>
+    </section>
+</div>
+{% endblock %}

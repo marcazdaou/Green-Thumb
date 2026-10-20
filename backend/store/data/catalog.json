@@ -1,0 +1,931 @@
+{
+ "dataset": "Chen, D. (2012). Online Retail II [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D",
+ "currency": "GBP",
+ "products": [
+  {
+   "stock_code": "85099B",
+   "name": "Jumbo Bag Red Retrospot",
+   "category": "Reusable bags",
+   "image": "jumbobag.jpg",
+   "price": 2.08,
+   "customers": 975,
+   "orders": 3996,
+   "units_sold": 96268,
+   "recommendations": [
+    {
+     "stock_code": "85099F",
+     "confidence": 0.2986,
+     "lift": 5.83
+    },
+    {
+     "stock_code": "22386",
+     "confidence": 0.3582,
+     "lift": 5.79
+    },
+    {
+     "stock_code": "21928",
+     "confidence": 0.2317,
+     "lift": 5.45
+    }
+   ]
+  },
+  {
+   "stock_code": "20725",
+   "name": "Lunch Bag Red Retrospot",
+   "category": "Lunch & picnic",
+   "image": "lunchbag.jpg",
+   "price": 1.65,
+   "customers": 842,
+   "orders": 3039,
+   "units_sold": 39746,
+   "recommendations": [
+    {
+     "stock_code": "22384",
+     "confidence": 0.3782,
+     "lift": 6.52
+    },
+    {
+     "stock_code": "20726",
+     "confidence": 0.3367,
+     "lift": 6.35
+    },
+    {
+     "stock_code": "20727",
+     "confidence": 0.3934,
+     "lift": 6.08
+    }
+   ]
+  },
+  {
+   "stock_code": "20727",
+   "name": "Lunch Bag Black Skull",
+   "category": "Lunch & picnic",
+   "image": "lunchbag.jpg",
+   "price": 1.65,
+   "customers": 704,
+   "orders": 2340,
+   "units_sold": 25573,
+   "recommendations": [
+    {
+     "stock_code": "22384",
+     "confidence": 0.4066,
+     "lift": 7.01
+    },
+    {
+     "stock_code": "20728",
+     "confidence": 0.3762,
+     "lift": 6.61
+    },
+    {
+     "stock_code": "20726",
+     "confidence": 0.3509,
+     "lift": 6.61
+    }
+   ]
+  },
+  {
+   "stock_code": "20728",
+   "name": "Lunch Bag Cars Blue",
+   "category": "Lunch & picnic",
+   "image": "lunchbag.jpg",
+   "price": 1.65,
+   "customers": 699,
+   "orders": 2058,
+   "units_sold": 23670,
+   "recommendations": [
+    {
+     "stock_code": "22384",
+     "confidence": 0.4367,
+     "lift": 7.53
+    },
+    {
+     "stock_code": "20726",
+     "confidence": 0.3973,
+     "lift": 7.49
+    },
+    {
+     "stock_code": "20727",
+     "confidence": 0.4275,
+     "lift": 6.61
+    }
+   ]
+  },
+  {
+   "stock_code": "22384",
+   "name": "Lunch Bag Pink Polkadot",
+   "category": "Lunch & picnic",
+   "image": "lunchbag.jpg",
+   "price": 1.65,
+   "customers": 679,
+   "orders": 2099,
+   "units_sold": 20745,
+   "recommendations": [
+    {
+     "stock_code": "20728",
+     "confidence": 0.4284,
+     "lift": 7.53
+    },
+    {
+     "stock_code": "20727",
+     "confidence": 0.4532,
+     "lift": 7.01
+    },
+    {
+     "stock_code": "20726",
+     "confidence": 0.3586,
+     "lift": 6.76
+    }
+   ]
+  },
+  {
+   "stock_code": "22386",
+   "name": "Jumbo Bag Pink Polkadot",
+   "category": "Reusable bags",
+   "image": "jumbobag.jpg",
+   "price": 2.08,
+   "customers": 600,
+   "orders": 2236,
+   "units_sold": 38984,
+   "recommendations": [
+    {
+     "stock_code": "21928",
+     "confidence": 0.2876,
+     "lift": 6.77
+    },
+    {
+     "stock_code": "85099F",
+     "confidence": 0.3383,
+     "lift": 6.61
+    },
+    {
+     "stock_code": "21929",
+     "confidence": 0.28,
+     "lift": 6.3
+    }
+   ]
+  },
+  {
+   "stock_code": "22487",
+   "name": "White Wood Garden Plant Ladder",
+   "category": "Garden",
+   "image": "succulet.png",
+   "price": 9.95,
+   "customers": 598,
+   "orders": 872,
+   "units_sold": 1578,
+   "recommendations": [
+    {
+     "stock_code": "22356",
+     "confidence": 0.0932,
+     "lift": 2.14
+    },
+    {
+     "stock_code": "22379",
+     "confidence": 0.0863,
+     "lift": 1.99
+    },
+    {
+     "stock_code": "85099F",
+     "confidence": 0.0978,
+     "lift": 1.91
+    }
+   ]
+  },
+  {
+   "stock_code": "20726",
+   "name": "Lunch Bag Woodland",
+   "category": "Lunch & picnic",
+   "image": "lunchbag.jpg",
+   "price": 1.65,
+   "customers": 582,
+   "orders": 1920,
+   "units_sold": 21193,
+   "recommendations": [
+    {
+     "stock_code": "20728",
+     "confidence": 0.4259,
+     "lift": 7.49
+    },
+    {
+     "stock_code": "22384",
+     "confidence": 0.392,
+     "lift": 6.76
+    },
+    {
+     "stock_code": "20727",
+     "confidence": 0.4275,
+     "lift": 6.61
+    }
+   ]
+  },
+  {
+   "stock_code": "85099F",
+   "name": "Jumbo Bag Strawberry",
+   "category": "Reusable bags",
+   "image": "jumbobag.jpg",
+   "price": 2.08,
+   "customers": 549,
+   "orders": 1850,
+   "units_sold": 36828,
+   "recommendations": [
+    {
+     "stock_code": "21929",
+     "confidence": 0.324,
+     "lift": 7.29
+    },
+    {
+     "stock_code": "21928",
+     "confidence": 0.3012,
+     "lift": 7.09
+    },
+    {
+     "stock_code": "22386",
+     "confidence": 0.4083,
+     "lift": 6.61
+    }
+   ]
+  },
+  {
+   "stock_code": "21931",
+   "name": "Jumbo Storage Bag Suki",
+   "category": "Reusable bags",
+   "image": "jumbobag.jpg",
+   "price": 2.08,
+   "customers": 544,
+   "orders": 2316,
+   "units_sold": 28836,
+   "recommendations": [
+    {
+     "stock_code": "21928",
+     "confidence": 0.2754,
+     "lift": 6.48
+    },
+    {
+     "stock_code": "85099F",
+     "confidence": 0.3247,
+     "lift": 6.34
+    },
+    {
+     "stock_code": "21929",
+     "confidence": 0.2815,
+     "lift": 6.33
+    }
+   ]
+  },
+  {
+   "stock_code": "20724",
+   "name": "Red Retrospot Charlotte Bag",
+   "category": "Reusable bags",
+   "image": "cottonbag.png",
+   "price": 0.85,
+   "customers": 521,
+   "orders": 2026,
+   "units_sold": 32015,
+   "recommendations": [
+    {
+     "stock_code": "22356",
+     "confidence": 0.5286,
+     "lift": 12.13
+    },
+    {
+     "stock_code": "20718",
+     "confidence": 0.2058,
+     "lift": 6.16
+    },
+    {
+     "stock_code": "22379",
+     "confidence": 0.2004,
+     "lift": 4.62
+    }
+   ]
+  },
+  {
+   "stock_code": "23203",
+   "name": "Jumbo Bag Vintage Doily",
+   "category": "Reusable bags",
+   "image": "jumbobag.jpg",
+   "price": 2.08,
+   "customers": 504,
+   "orders": 1226,
+   "units_sold": 20144,
+   "recommendations": [
+    {
+     "stock_code": "23209",
+     "confidence": 0.4106,
+     "lift": 13.55
+    },
+    {
+     "stock_code": "23201",
+     "confidence": 0.2988,
+     "lift": 12.04
+    },
+    {
+     "stock_code": "21928",
+     "confidence": 0.1902,
+     "lift": 4.48
+    }
+   ]
+  },
+  {
+   "stock_code": "21929",
+   "name": "Jumbo Bag Pink Vintage Paisley",
+   "category": "Reusable bags",
+   "image": "jumbobag.jpg",
+   "price": 2.08,
+   "customers": 504,
+   "orders": 1612,
+   "units_sold": 25356,
+   "recommendations": [
+    {
+     "stock_code": "21928",
+     "confidence": 0.4685,
+     "lift": 11.03
+    },
+    {
+     "stock_code": "85099F",
+     "confidence": 0.3732,
+     "lift": 7.29
+    },
+    {
+     "stock_code": "21931",
+     "confidence": 0.4056,
+     "lift": 6.33
+    }
+   ]
+  },
+  {
+   "stock_code": "23209",
+   "name": "Lunch Bag Vintage Doily",
+   "category": "Lunch & picnic",
+   "image": "lunchbag.jpg",
+   "price": 1.65,
+   "customers": 468,
+   "orders": 1096,
+   "units_sold": 13149,
+   "recommendations": [
+    {
+     "stock_code": "23203",
+     "confidence": 0.4598,
+     "lift": 13.55
+    },
+    {
+     "stock_code": "23201",
+     "confidence": 0.1993,
+     "lift": 8.03
+    },
+    {
+     "stock_code": "22384",
+     "confidence": 0.3126,
+     "lift": 5.39
+    }
+   ]
+  },
+  {
+   "stock_code": "22629",
+   "name": "Spaceboy Lunch Box",
+   "category": "Lunch & picnic",
+   "image": "lunchbox.jpg",
+   "price": 1.95,
+   "customers": 456,
+   "orders": 1367,
+   "units_sold": 20795,
+   "recommendations": [
+    {
+     "stock_code": "22630",
+     "confidence": 0.6047,
+     "lift": 16.42
+    },
+    {
+     "stock_code": "21559",
+     "confidence": 0.1508,
+     "lift": 4.47
+    },
+    {
+     "stock_code": "20726",
+     "confidence": 0.202,
+     "lift": 3.81
+    }
+   ]
+  },
+  {
+   "stock_code": "21928",
+   "name": "Jumbo Bag Scandinavian Paisley",
+   "category": "Reusable bags",
+   "image": "jumbobag.jpg",
+   "price": 2.08,
+   "customers": 449,
+   "orders": 1538,
+   "units_sold": 24048,
+   "recommendations": [
+    {
+     "stock_code": "21929",
+     "confidence": 0.4902,
+     "lift": 11.03
+    },
+    {
+     "stock_code": "85099F",
+     "confidence": 0.3631,
+     "lift": 7.09
+    },
+    {
+     "stock_code": "22386",
+     "confidence": 0.4185,
+     "lift": 6.77
+    }
+   ]
+  },
+  {
+   "stock_code": "84997B",
+   "name": "Red 3 Piece Mini Dots Cutlery Set",
+   "category": "Lunch & picnic",
+   "image": "cutlery.jpg",
+   "price": 4.15,
+   "customers": 433,
+   "orders": 1102,
+   "units_sold": 9671,
+   "recommendations": [
+    {
+     "stock_code": "84997C",
+     "confidence": 0.58,
+     "lift": 20.57
+    },
+    {
+     "stock_code": "84997D",
+     "confidence": 0.5473,
+     "lift": 17.01
+    },
+    {
+     "stock_code": "20728",
+     "confidence": 0.2318,
+     "lift": 4.07
+    }
+   ]
+  },
+  {
+   "stock_code": "84997D",
+   "name": "Pink 3 Piece Mini Dots Cutlery Set",
+   "category": "Lunch & picnic",
+   "image": "cutlery.jpg",
+   "price": 4.15,
+   "customers": 430,
+   "orders": 1164,
+   "units_sold": 10988,
+   "recommendations": [
+    {
+     "stock_code": "84997C",
+     "confidence": 0.6136,
+     "lift": 21.76
+    },
+    {
+     "stock_code": "84997B",
+     "confidence": 0.5181,
+     "lift": 17.01
+    },
+    {
+     "stock_code": "20728",
+     "confidence": 0.2367,
+     "lift": 4.16
+    }
+   ]
+  },
+  {
+   "stock_code": "20718",
+   "name": "Red Retrospot Shopper Bag",
+   "category": "Reusable bags",
+   "image": "cottonbag.png",
+   "price": 1.25,
+   "customers": 426,
+   "orders": 1208,
+   "units_sold": 13311,
+   "recommendations": [
+    {
+     "stock_code": "20724",
+     "confidence": 0.3455,
+     "lift": 6.16
+    },
+    {
+     "stock_code": "22379",
+     "confidence": 0.2552,
+     "lift": 5.89
+    },
+    {
+     "stock_code": "22356",
+     "confidence": 0.2535,
+     "lift": 5.82
+    }
+   ]
+  },
+  {
+   "stock_code": "84997C",
+   "name": "Blue 3 Piece Mini Dots Cutlery Set",
+   "category": "Lunch & picnic",
+   "image": "cutlery.jpg",
+   "price": 4.15,
+   "customers": 426,
+   "orders": 1023,
+   "units_sold": 9072,
+   "recommendations": [
+    {
+     "stock_code": "84997D",
+     "confidence": 0.7004,
+     "lift": 21.76
+    },
+    {
+     "stock_code": "84997B",
+     "confidence": 0.6267,
+     "lift": 20.57
+    },
+    {
+     "stock_code": "20728",
+     "confidence": 0.2269,
+     "lift": 3.99
+    }
+   ]
+  },
+  {
+   "stock_code": "22630",
+   "name": "Dolly Girl Lunch Box",
+   "category": "Lunch & picnic",
+   "image": "lunchbox.jpg",
+   "price": 1.95,
+   "customers": 423,
+   "orders": 1330,
+   "units_sold": 17864,
+   "recommendations": [
+    {
+     "stock_code": "22629",
+     "confidence": 0.6211,
+     "lift": 16.42
+    },
+    {
+     "stock_code": "21559",
+     "confidence": 0.1677,
+     "lift": 4.97
+    },
+    {
+     "stock_code": "22379",
+     "confidence": 0.1737,
+     "lift": 4.01
+    }
+   ]
+  },
+  {
+   "stock_code": "22379",
+   "name": "Recycling Bag Retrospot",
+   "category": "Reusable bags",
+   "image": "cottonbag.png",
+   "price": 2.1,
+   "customers": 422,
+   "orders": 1568,
+   "units_sold": 15763,
+   "recommendations": [
+    {
+     "stock_code": "20718",
+     "confidence": 0.1968,
+     "lift": 5.89
+    },
+    {
+     "stock_code": "22386",
+     "confidence": 0.3182,
+     "lift": 5.15
+    },
+    {
+     "stock_code": "21931",
+     "confidence": 0.3176,
+     "lift": 4.96
+    }
+   ]
+  },
+  {
+   "stock_code": "22356",
+   "name": "Charlotte Bag Pink Polkadot",
+   "category": "Reusable bags",
+   "image": "cottonbag.png",
+   "price": 0.85,
+   "customers": 421,
+   "orders": 1574,
+   "units_sold": 19565,
+   "recommendations": [
+    {
+     "stock_code": "20724",
+     "confidence": 0.6804,
+     "lift": 12.13
+    },
+    {
+     "stock_code": "20718",
+     "confidence": 0.1944,
+     "lift": 5.82
+    },
+    {
+     "stock_code": "22384",
+     "confidence": 0.2903,
+     "lift": 5.01
+    }
+   ]
+  },
+  {
+   "stock_code": "22607",
+   "name": "Wooden Rounders Garden Set",
+   "category": "Garden",
+   "image": "gardengame.jpg",
+   "price": 9.95,
+   "customers": 419,
+   "orders": 743,
+   "units_sold": 2531,
+   "recommendations": [
+    {
+     "stock_code": "22606",
+     "confidence": 0.2429,
+     "lift": 24.16
+    },
+    {
+     "stock_code": "22605",
+     "confidence": 0.3813,
+     "lift": 21.71
+    },
+    {
+     "stock_code": "22379",
+     "confidence": 0.0991,
+     "lift": 2.29
+    }
+   ]
+  },
+  {
+   "stock_code": "21559",
+   "name": "Strawberry Lunch Box with Cutlery",
+   "category": "Lunch & picnic",
+   "image": "cutlery.jpg",
+   "price": 2.55,
+   "customers": 396,
+   "orders": 1220,
+   "units_sold": 8226,
+   "recommendations": [
+    {
+     "stock_code": "22630",
+     "confidence": 0.1831,
+     "lift": 4.97
+    },
+    {
+     "stock_code": "22432",
+     "confidence": 0.0665,
+     "lift": 4.67
+    },
+    {
+     "stock_code": "22629",
+     "confidence": 0.1691,
+     "lift": 4.47
+    }
+   ]
+  },
+  {
+   "stock_code": "23201",
+   "name": "Jumbo Bag Alphabet",
+   "category": "Reusable bags",
+   "image": "jumbobag.jpg",
+   "price": 2.08,
+   "customers": 395,
+   "orders": 898,
+   "units_sold": 12924,
+   "recommendations": [
+    {
+     "stock_code": "23203",
+     "confidence": 0.4085,
+     "lift": 12.04
+    },
+    {
+     "stock_code": "23209",
+     "confidence": 0.2433,
+     "lift": 8.03
+    },
+    {
+     "stock_code": "21928",
+     "confidence": 0.2221,
+     "lift": 5.23
+    }
+   ]
+  },
+  {
+   "stock_code": "22605",
+   "name": "Wooden Croquet Garden Set",
+   "category": "Garden",
+   "image": "gardengame.jpg",
+   "price": 14.95,
+   "customers": 376,
+   "orders": 639,
+   "units_sold": 1824,
+   "recommendations": [
+    {
+     "stock_code": "22606",
+     "confidence": 0.2902,
+     "lift": 28.87
+    },
+    {
+     "stock_code": "22607",
+     "confidence": 0.4432,
+     "lift": 21.71
+    },
+    {
+     "stock_code": "20724",
+     "confidence": 0.1025,
+     "lift": 1.83
+    }
+   ]
+  },
+  {
+   "stock_code": "22431",
+   "name": "Watering Can Blue Elephant",
+   "category": "Garden",
+   "image": "wateringcan.jpg",
+   "price": 1.95,
+   "customers": 269,
+   "orders": 617,
+   "units_sold": 3349,
+   "recommendations": [
+    {
+     "stock_code": "22432",
+     "confidence": 0.4545,
+     "lift": 31.93
+    },
+    {
+     "stock_code": "22523",
+     "confidence": 0.1088,
+     "lift": 11.22
+    },
+    {
+     "stock_code": "21559",
+     "confidence": 0.1461,
+     "lift": 4.33
+    }
+   ]
+  },
+  {
+   "stock_code": "22606",
+   "name": "Wooden Skittles Garden Set",
+   "category": "Garden",
+   "image": "gardengame.jpg",
+   "price": 15.95,
+   "customers": 265,
+   "orders": 366,
+   "units_sold": 1043,
+   "recommendations": [
+    {
+     "stock_code": "22605",
+     "confidence": 0.5069,
+     "lift": 28.87
+    },
+    {
+     "stock_code": "22607",
+     "confidence": 0.4931,
+     "lift": 24.16
+    }
+   ]
+  },
+  {
+   "stock_code": "22432",
+   "name": "Watering Can Pink Bunny",
+   "category": "Garden",
+   "image": "wateringcan.jpg",
+   "price": 1.95,
+   "customers": 264,
+   "orders": 514,
+   "units_sold": 3516,
+   "recommendations": [
+    {
+     "stock_code": "22431",
+     "confidence": 0.5447,
+     "lift": 31.93
+    },
+    {
+     "stock_code": "21559",
+     "confidence": 0.1576,
+     "lift": 4.67
+    },
+    {
+     "stock_code": "20726",
+     "confidence": 0.1615,
+     "lift": 3.04
+    }
+   ]
+  },
+  {
+   "stock_code": "22522",
+   "name": "Childs Garden Fork Blue",
+   "category": "Garden",
+   "image": "gardentools.jpg",
+   "price": 0.85,
+   "customers": 248,
+   "orders": 332,
+   "units_sold": 2224,
+   "recommendations": [
+    {
+     "stock_code": "22523",
+     "confidence": 0.7771,
+     "lift": 80.17
+    },
+    {
+     "stock_code": "20725",
+     "confidence": 0.2018,
+     "lift": 2.4
+    },
+    {
+     "stock_code": "85099B",
+     "confidence": 0.1958,
+     "lift": 1.78
+    }
+   ]
+  },
+  {
+   "stock_code": "22523",
+   "name": "Childs Garden Fork Pink",
+   "category": "Garden",
+   "image": "gardentools.jpg",
+   "price": 0.85,
+   "customers": 248,
+   "orders": 351,
+   "units_sold": 2171,
+   "recommendations": [
+    {
+     "stock_code": "22522",
+     "confidence": 0.7371,
+     "lift": 80.17
+    },
+    {
+     "stock_code": "22431",
+     "confidence": 0.1914,
+     "lift": 11.22
+    },
+    {
+     "stock_code": "22384",
+     "confidence": 0.1971,
+     "lift": 3.4
+    }
+   ]
+  },
+  {
+   "stock_code": "21340",
+   "name": "Classic Metal Birdcage Plant Holder",
+   "category": "Garden",
+   "image": "succulet.png",
+   "price": 12.75,
+   "customers": 246,
+   "orders": 411,
+   "units_sold": 1721,
+   "recommendations": []
+  },
+  {
+   "stock_code": "21745",
+   "name": "Gaolers Keys Decorative Garden",
+   "category": "Garden",
+   "image": "succulet.png",
+   "price": 3.75,
+   "customers": 236,
+   "orders": 485,
+   "units_sold": 2683,
+   "recommendations": []
+  },
+  {
+   "stock_code": "21714",
+   "name": "Citronella Candle Garden Pot",
+   "category": "Garden",
+   "image": "succulet.png",
+   "price": 2.46,
+   "customers": 230,
+   "orders": 522,
+   "units_sold": 4283,
+   "recommendations": [
+    {
+     "stock_code": "22356",
+     "confidence": 0.1497,
+     "lift": 3.43
+    },
+    {
+     "stock_code": "20724",
+     "confidence": 0.1862,
+     "lift": 3.32
+    },
+    {
+     "stock_code": "22379",
+     "confidence": 0.1248,
+     "lift": 2.88
+    }
+   ]
+  },
+  {
+   "stock_code": "22430",
+   "name": "Enamel Watering Can Cream",
+   "category": "Garden",
+   "image": "wateringcan.jpg",
+   "price": 4.95,
+   "customers": 226,
+   "orders": 351,
+   "units_sold": 1364,
+   "recommendations": [
+    {
+     "stock_code": "85099B",
+     "confidence": 0.1743,
+     "lift": 1.59
+    }
+   ]
+  }
+ ]
+}

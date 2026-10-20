@@ -1,0 +1,24 @@
+{% extends "store/base.html" %}
+{# Sign-up form (SignUpForm in forms.py). #}
+{% block title %}Create account{% endblock %}
+{% block page %}register{% endblock %}
+
+{% block content %}
+<section class="auth-card card">
+    <h1>Create an account</h1>
+    <p class="muted">An account lets you write reviews and keeps your cart separate.</p>
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}">
+        {% for field in form %}
+            <label class="field">{{ field.label }}
+                {{ field }}
+                {% if field.help_text %}<span class="help">{{ field.help_text|safe }}</span>{% endif %}
+                {% for error in field.errors %}<span class="form-error">{{ error }}</span>{% endfor %}
+            </label>
+        {% endfor %}
+        <button type="submit" class="btn btn-block">Create account</button>
+    </form>
+    <p class="muted">Already have an account? <a href="{% url 'login' %}?next={{ next|urlencode }}">Sign in</a></p>
+</section>
+{% endblock %}

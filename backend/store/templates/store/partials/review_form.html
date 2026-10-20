@@ -1,0 +1,24 @@
+{# Review form. Pass `fixed_product` to review one product (product page) instead of choosing from a list. #}
+<form class="review-form card" method="post" action="{% url 'submit_review' %}">
+    {% csrf_token %}
+    <h3>Write a review</h3>
+    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+    {% if fixed_product %}
+        <input type="hidden" name="product" value="{{ fixed_product.pk }}">
+    {% else %}
+        <label class="field">Product
+            {{ form.product }}
+        </label>
+    {% endif %}
+    <fieldset class="star-picker">
+        <legend>Your rating</legend>
+        {% for value, label in form.fields.stars.choices %}
+            <input type="radio" id="star-{{ value }}" name="stars" value="{{ value }}" required>
+            <label for="star-{{ value }}" title="{{ value }} star{{ value|pluralize }}">&#9733;</label>
+        {% endfor %}
+    </fieldset>
+    <label class="field">{{ form.text.label }}
+        {{ form.text }}
+    </label>
+    <button class="btn" type="submit">Post review</button>
+</form>
