@@ -193,5 +193,3 @@ Green-Thumb/
 ## Author
 
 **Marc Abi Zeid Daou** · [GitHub](https://github.com/marcazdaou)
-
-Originally started as a UMass Boston team project ([A3GT/Green-Thumb](https://github.com/A3GT/Green-Thumb)); this version was rebuilt by Marc Abi Zeid Daou.
