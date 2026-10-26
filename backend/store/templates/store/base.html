@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Green Thumb{% endblock %} | Green Thumb</title>
     <meta name="description" content="Green Thumb: reusable and garden products, built on real retail data.">
+    {# Link previews (LinkedIn, Slack, etc.) #}
+    <meta property="og:title" content="Green Thumb – E-Commerce Platform with Machine Learning">
+    <meta property="og:description" content="A Django store built on 1M+ real retail transactions, with a repurchase model, &quot;bought together&quot; recommendations and Stripe test checkout.">
+    <meta property="og:image" content="https://{{ request.get_host }}{% static 'og-preview.jpg' %}">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
     {# Each page fills in the blocks below: title, page (highlights the nav link), content, scripts. #}
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
