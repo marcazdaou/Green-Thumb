@@ -101,6 +101,34 @@ Removing reversed sales matters: without it, a few orders that were placed and i
 
 ---
 
+## How it works
+
+```mermaid
+flowchart LR
+    subgraph offline["Data science pipeline (offline)"]
+        A["Online Retail II<br/>1,067,371 transactions"] --> B["Clean<br/>analysis/data.py"]
+        B --> C["RFM + k-means<br/>segments"]
+        B --> D["Repurchase model<br/>ROC AUC 0.795"]
+        B --> E["Bought-together<br/>rules"]
+        C --> R[("results.json")]
+        D --> R
+        E --> K[("catalog.json")]
+    end
+    subgraph web["Django web app"]
+        U(["Shopper"]) --> S["Store<br/>shop, cart, reviews"]
+        S --> P[("PostgreSQL")]
+        S --> X["Stripe Checkout<br/>test mode"]
+        X -- "verified webhook" --> S
+        I["Insights dashboard<br/>Plotly"]
+    end
+    K -- "load_catalog" --> P
+    R --> I
+```
+
+The pipeline runs once and commits its results, so the live site reads saved files and never retrains on a request.
+
+---
+
 ## Run it locally
 
 Requires Python 3.11+.
